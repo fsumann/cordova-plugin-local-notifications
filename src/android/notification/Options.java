@@ -300,5 +300,12 @@ public class Options {
     public String toString() {
         return options.toString();
     }
+	
+	/**
+     * Option for displaying local notifications.
+     */
+	public boolean displayNotification () {
+		return options.optBoolean("display", true);
+    }
 
 }

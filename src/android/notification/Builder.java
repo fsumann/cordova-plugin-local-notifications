@@ -115,33 +115,36 @@ public class Builder {
      * Creates the notification with all its options passed through JS.
      */
     public Notification build() {
-        Uri sound = options.getSoundUri();
-        NotificationCompat.BigTextStyle style;
-        NotificationCompat.Builder builder;
+		NotificationCompat.Builder builder = null;
+		
+		if(options.displayNotification()) {
+			Uri sound = options.getSoundUri();
+			NotificationCompat.BigTextStyle style;
+			
+			style = new NotificationCompat.BigTextStyle()
+					.bigText(options.getText());
 
-        style = new NotificationCompat.BigTextStyle()
-                .bigText(options.getText());
+			builder = new NotificationCompat.Builder(context)
+					.setDefaults(0)
+					.setContentTitle(options.getTitle())
+					.setContentText(options.getText())
+					.setNumber(options.getBadgeNumber())
+					.setTicker(options.getText())
+					.setSmallIcon(options.getSmallIcon())
+					.setLargeIcon(options.getIconBitmap())
+					.setAutoCancel(options.isAutoClear())
+					.setOngoing(options.isOngoing())
+					.setStyle(style)
+					.setLights(options.getLedColor(), 500, 500);
 
-        builder = new NotificationCompat.Builder(context)
-                .setDefaults(0)
-                .setContentTitle(options.getTitle())
-                .setContentText(options.getText())
-                .setNumber(options.getBadgeNumber())
-                .setTicker(options.getText())
-                .setSmallIcon(options.getSmallIcon())
-                .setLargeIcon(options.getIconBitmap())
-                .setAutoCancel(options.isAutoClear())
-                .setOngoing(options.isOngoing())
-                .setStyle(style)
-                .setLights(options.getLedColor(), 500, 500);
+			if (sound != null) {
+				builder.setSound(sound);
+			}
 
-        if (sound != null) {
-            builder.setSound(sound);
-        }
-
-        applyDeleteReceiver(builder);
-        applyContentReceiver(builder);
-
+			applyDeleteReceiver(builder);
+			applyContentReceiver(builder);
+		}
+		
         return new Notification(context, options, builder, triggerReceiver);
     }
 

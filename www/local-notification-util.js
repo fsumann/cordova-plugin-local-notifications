@@ -31,14 +31,15 @@ var exec    = require('cordova/exec'),
 
 // Default values
 exports._defaults = {
-    text:  '',
-    title: '',
-    sound: 'res://platform_default',
-    badge: 0,
-    id:    "0",
-    data:  undefined,
-    every: undefined,
-    at:    undefined
+    text:    '',
+    title:   '',
+    sound:   'res://platform_default',
+    badge:   0,
+    id:      "0",
+    data:    undefined,
+    every:   undefined,
+    at:      undefined, 
+	display: true
 };
 
 // listener
